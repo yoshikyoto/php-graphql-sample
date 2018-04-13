@@ -45,7 +45,26 @@ timeline {
 }
 ```
 
-タイムラインを表示するのであればこういう感じです。本文、投稿日時、アイコン、ユーザー名があればタイムラインが表示可能です。
+タイムラインを表示するのであればこういう感じです。レスポンスはこうなるイメージです。
+
+```
+{
+  "timeline":[
+    {
+      "test":"ツイートだよ",
+      "createdAt":"2018-04-13 12:34:56",
+      "user":{
+        "icon":"http://twitter.com/icon.jpg",
+        "screenName":"yoshikyoto"
+      }
+    },
+    ...
+  ]
+}
+```
+
+
+本文、投稿日時、アイコン、ユーザー名があればタイムラインが表示可能です。
 
 いっぽうでユーザーページを表示するならこうです。
 
@@ -55,15 +74,34 @@ user {
   icon
   profile
   location
-  tweet {
+  tweet(limit:20) {
     text
     createdAt
   }
 }
 ```
 
-こういったクエリをクライアントから投げることになります。
+ユーザーのscreenNameなどの基本的な情報とツイートを20件取得してくるというクエリです。レスポンスはこういう感じです。
 
+```
+{
+  "user": {
+    "screenName":"yoshikyoto",
+    "icon":"http://twitter.com/icon.jpg",
+    "profile":"yoshikyotoです。エンジニアです。",
+    "location":"京都",
+    "tweet": [
+      {
+        "text":"はじめてのツイート",
+        "createdAt":"..."
+      },
+      ...
+    ]
+  }
+}
+```
+
+このようにクエリに対応した要素だけレスポンスに含まれるようになります。
 一方でサーバーサイドは、投げられたクエリに対して結果を返すだけになりますのでシンプルになります。
 
 ### GraphQLのメリット
@@ -83,7 +121,7 @@ user {
 
 * PHP 5.6 or 7
 * https://github.com/webonyx/graphql-php
-
+  * Document: http://webonyx.github.io/graphql-php/data-fetching
 
 ## 動作方法
 
