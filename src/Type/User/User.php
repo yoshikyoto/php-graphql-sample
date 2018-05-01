@@ -28,11 +28,24 @@ class User extends ObjectType {
                         return $this->getUser($id)->getName();
                     }
                 ],
+                'profile' => [
+                    'type' => Type::string(),
+                    'resolve' => function($id) {
+                        return $this->getUser($id)->getProfile();
+                    }
+                ],
+                'address' => [
+                    'type' => Type::string(),
+                    'resolve' => function($id) {
+                        return $this->getUser($id)->getAddress();
+                    }
+                ],
             ],
         ]);
     }
 
     private function getUser($id) {
+        error_log(__METHOD__ . "\n", 3, "/tmp/php-graphql-sample.log");
         return $this->userRepository->getUser($id);
     }
 
