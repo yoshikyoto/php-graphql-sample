@@ -185,6 +185,10 @@ GraphQLでは参照系はquery、更新系はmutationというメソッド（？
 
 `UtakataQL\Type\User\User`からこの`UserRepository`が呼ばれておりますが、`UserRepository`が実際のデータの取得などを行い、`Type\User\User`クラスはGraphQLのクエリとデータの対応付のようなことを行っています。
 
-## n+1問題
+## n+1問題などの解決方法
 
-* TODO。解決方法があります。
+以下のようなクエリを投げるとします。
+
+```
+curl -X POST -H "Content-Type: application/json" "http://localhost:8080/graphql/" -d '{"query": "query { user(id: 1){id name followers{id name followers{id name followers{id name}}}} }"}'
+```

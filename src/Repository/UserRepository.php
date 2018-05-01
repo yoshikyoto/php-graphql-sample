@@ -14,10 +14,13 @@ class UserRepository
 
     public function __construct()
     {
+        $sakamoto = new User(1, 'Sakamoto', '坂本ですが。', '京都府');
+        $sato = new User(2, 'Sato', '佐藤です。', '千葉県');
+        $tanaka = new User(3, 'Tanaka', '田中です。', '東京都');
         $this->dummyData = [
-            1 => new User(1, 'Sakamoto', '坂本ですが。', '京都府'),
-            2 => new User(2, 'Sato', '佐藤です。', '千葉県'),
-            3 => new User(3, 'Tanaka', '田中です。', '東京都'),
+            1 => $sakamoto,
+            2 => $sato,
+            3 => $tanaka,
         ];
     }
 
@@ -37,6 +40,8 @@ class User
     private $name;
     private $profile;
     private $address;
+    /** @var int[] */
+    private $followerIds;
 
     public function __construct($id, $name, $profile, $address)
     {
