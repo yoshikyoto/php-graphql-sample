@@ -56,7 +56,6 @@ class User extends ObjectType {
     }
 
     private function getUser($id) {
-        error_log(__METHOD__ . "\n", 3, "/tmp/php-graphql-sample.log");
         return $this->userRepository->getUser($id);
     }
 

@@ -26,6 +26,8 @@ class UserRepository
 
     public function getUser($id)
     {
+        date_default_timezone_set('Asia/Tokyo');
+        error_log(date('Y-m-d H:i:s') . "\t" . __METHOD__ . "\n", 3, "/tmp/php-graphql-sample.log");
         return $this->dummyData[$id];
     }
 

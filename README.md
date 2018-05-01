@@ -190,5 +190,23 @@ GraphQLでは参照系はquery、更新系はmutationというメソッド（？
 以下のようなクエリを投げるとします。
 
 ```
-curl -X POST -H "Content-Type: application/json" "http://localhost:8080/graphql/" -d '{"query": "query { user(id: 1){id name followers{id name followers{id name followers{id name}}}} }"}'
+curl -X POST -H "Content-Type: application/json" "http://localhost:9080/graphql/" -d '{"query": "query { user(id: 1){name address followers{id name followers{id name followers{id name}}}} }"}'
 ```
+
+結果はこうなります。
+
+```
+{"data":{"user":{"name":"Sakamoto","address":"\u4eac\u90fd\u5e9c","followers":[{"id":2,"name":"Sato","followers":[{"id":3,"name":"Tanaka","followers":[{"id":1,"name":"Sakamoto"}]}]}]}}}
+```
+
+ここで、`UserRepository`の`getUser`にログを仕込んであるので、ログを見てみます。
+
+```
+2018-05-01 18:58:55	UtakataQL\Repository\UserRepository::getUser
+2018-05-01 18:58:55	UtakataQL\Repository\UserRepository::getUser
+2018-05-01 18:58:55	UtakataQL\Repository\UserRepository::getUser
+2018-05-01 18:58:55	UtakataQL\Repository\UserRepository::getUser
+2018-05-01 18:58:55	UtakataQL\Repository\UserRepository::getUser
+```
+
+リポジトリの`getUser`メソッドが5回呼ばれていることがわかります。
