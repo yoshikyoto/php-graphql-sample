@@ -136,6 +136,13 @@ user {
 * jsonの`query`キーの値がGraphQLのクエリになります。
 * HTTPメソッドは常にPOSTになります
 
+[PHPビルトインサーバー](http://php.net/manual/ja/features.commandline.webserver.php)で動かしてみます。
+
+```
+cd public
+php -S localhost:8080
+```
+
 id:1のユーザーのidとnameを取得するクエリは以下の通りです。
 
 ```
@@ -185,7 +192,7 @@ GraphQLでは参照系はquery、更新系はmutationというメソッド（？
 
 `UtakataQL\Type\User\User`からこの`UserRepository`が呼ばれておりますが、`UserRepository`が実際のデータの取得などを行い、`Type\User\User`クラスはGraphQLのクエリとデータの対応付のようなことを行っています。
 
-## n+1問題などの解決方法
+## n+1問題
 
 以下のようなクエリを投げるとします。
 
